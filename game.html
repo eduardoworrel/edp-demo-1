@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Hero</title>
+</head>
+<body>
+    <h1><span id="nome"></span> : <span id="pontos">0</span> pontos</h1>
+    <script>
+        let nome = '';
+        while(nome.length < 2){
+            nome = prompt("Qual seu nome jogador?")
+            if(nome.length < 3){
+                alert("o nome deve ter no mínimo 3 caracteres")
+            }
+        }
+        document.querySelector("#nome").textContent = nome
+
+        let pontos;
+        let started = false
+        let lastClickDatetime;
+
+        window.onclick = ()=>{
+           increasePoint()
+        }
+        window.ondblclick = ()=>{
+            increasePoint()
+        }
+        window.oncontextmenu = (e)=>{
+            // e.preventDefault()
+            increasePoint()
+        }
+        function increasePoint(){
+            
+            if(!started){
+                startGame()
+            }
+            if(started){
+                lostIfPass1sec()
+            }
+            pontos++;
+            updateInterface()
+        }
+        function lostIfPass1sec(){
+            let compareDate = new Date()
+            compareDate.setSeconds(compareDate.getSeconds() -1)
+            
+            console.log(typeof lastClickDatetime)
+            if(lastClickDatetime >= compareDate){
+                lastClickDatetime = new Date()
+            }else{
+                 gameOver()
+            }
+        }
+        function gameOver(){
+            started = false;
+            alert("Game Over")
+        }
+        function startGame(){
+            lastClickDatetime = new Date()
+            started = true
+            pontos = 0
+        }
+        function updateInterface(){
+            document.querySelector("#pontos").textContent = pontos
+        }
+    </script>
+</body>
+</html>
