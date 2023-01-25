@@ -5,20 +5,18 @@
 var f  = new Fibonacci();
 Console.WriteLine("qual posição voce deseja saber o valor?");
 var posicaoDesejada = Console.ReadLine();
-var position = int.Parse(posicaoDesejada);
+var position = double.Parse(posicaoDesejada);
 Console.WriteLine(f.getByPosition(position));
 
 class Fibonacci{
-    private Dictionary<int,decimal> hash = new Dictionary<int,decimal>{};
-    public decimal getByPosition(int posicao){
+    private Dictionary<double,double> hash = new Dictionary<double,double>{};
+    public double getByPosition(double posicao){
 
         hash.Add(1,1);
         hash.Add(2,1);
         var len = this.hash.Count();
-        for(var i = 3; i <= posicao; i++){
-            Console.WriteLine(hash[i-1 + i-2]);
-            this.hash[posicao] = hash[i-1 + i-2];
-            Console.WriteLine(this.hash);
+        for(var i = 3; i <= posicao; i++){ 
+            this.hash[i] = hash[i-1] + hash[i-2];
         }
         return this.hash[posicao];
     }

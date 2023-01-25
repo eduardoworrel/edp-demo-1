@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        fetch("http://localhost:5151/WeatherForecast/buscaPreferencia")
+        .then(e=>e.json())
+        .then(data => {
+            
+            document.body.style.backgroundColor = data.corDeFundo
+            document.body.style.fontSize = data.tamanhoDaFonte
+            document.body.style.color = data.corDoTexto
+            document.body.innerText = data.conteudoDinamico
+        })
+    </script>
+</body>
+</html>
