@@ -7,16 +7,69 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="conteudo-salvo"></div>
+    <hr>
+    <div>
+        <b>Qual a cor de fundo desejada</b>
+        <input id="corFundo" type="color">
+        <br>
+        <b>Qual a cor de texto desejada</b>
+        <input id="corTexto"  type="color">
+        <br>
+        <b>Qual o tamanho da fonte</b>
+        <select  id="tamanho" >
+            <option value="10px">10px</option>
+            <option value="5em">5em</option>
+            <option value="1000px">1000px</option>
+        </select><br>
+        <b>Qual o conteudo da página</b>
+        <textarea id="conteudo" ></textarea>
+        <br>
+        <button id="submit">Atualiza página</button>
+    </div>
     <script>
-        fetch("http://localhost:5151/WeatherForecast/buscaPreferencia")
-        .then(e=>e.json())
-        .then(data => {
+
+        const corFundo = document.querySelector("#corFundo")
+        const corTexto = document.querySelector("#corTexto")
+        const tamanho = document.querySelector("#tamanho")
+        const conteudo = document.querySelector("#conteudo")
+        const submit = document.querySelector("#submit")
+        const conteudoSalvo = document.querySelector("#conteudo-salvo")
+
+        submit.onclick = ()=>{
+            const inputs = {
+                "corDeFundo": corFundo.value,
+                "corDoTexto": corTexto.value,
+                "tamanhoDaFonte": tamanho.value,
+                "conteudoDinamico": conteudo.value
+            }
             
-            document.body.style.backgroundColor = data.corDeFundo
-            document.body.style.fontSize = data.tamanhoDaFonte
-            document.body.style.color = data.corDoTexto
-            document.body.innerText = data.conteudoDinamico
-        })
+            fetch("http://localhost:5151/WeatherForecast/salvaPrefencia",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(inputs),
+            }).then(()=>{
+                atualizaFront()
+            })
+        }
+
+       atualizaFront()
+        
+
+        function atualizaFront(){
+            fetch("http://localhost:5151/WeatherForecast/buscaPreferencia")
+            .then(e=>e.json())
+            .then(data => {
+                
+                document.body.style.backgroundColor = data.corDeFundo
+                document.body.style.fontSize = data.tamanhoDaFonte
+                document.body.style.color = data.corDoTexto
+                conteudoSalvo.innerText = data.conteudoDinamico
+            })
+        }
     </script>
 </body>
 </html>
