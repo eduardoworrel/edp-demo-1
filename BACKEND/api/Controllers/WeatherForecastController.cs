@@ -12,11 +12,13 @@ public class WeatherForecastController : ControllerBase
     public WeatherForecastController(ApplicationDbContext context)
     {
         _context = context;
+        // _preferenciasRepository = preferenciasRepository;
     }
 
     [HttpGet]
     public ActionResult<Preferencias> buscaPreferencia()
     {
+
         if(_context.Preferencias.Any()){
             return _context.Preferencias.First();
         }else{
@@ -26,6 +28,7 @@ public class WeatherForecastController : ControllerBase
     [HttpPost]
     public void SalvaPrefencia(PreferenciasViewModel preferenciasViewModel)
     {
+
         var preferencias = new Preferencias {
             ConteudoDinamico = preferenciasViewModel.ConteudoDinamico,
             CorDeFundo = preferenciasViewModel.CorDeFundo,
@@ -39,7 +42,7 @@ public class WeatherForecastController : ControllerBase
         }else{
             _context.Preferencias.Add(preferencias);
         }
-        _context.SaveChanges();
+         _context.SaveChanges();
         
     }
 }
