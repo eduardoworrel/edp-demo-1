@@ -26,7 +26,7 @@ public class WeatherForecastController : ControllerBase
         }
     }
     [HttpPost]
-    public void SalvaPrefencia(PreferenciasViewModel preferenciasViewModel)
+    public void SalvaPrefencia([FromForm]PreferenciasViewModel preferenciasViewModel)
     {
 
         var preferencias = new Preferencias {
